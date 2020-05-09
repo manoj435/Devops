@@ -13,18 +13,18 @@ Pre - Docker :
 
 Normal Architecture :
 
-Application		Application		Application		Application
-OS					OS				OS				OS
-VM					VM				VM				VM
+Application	Application	Application	Application
+OS		OS		OS		OS
+VM		VM		VM		VM
  ------------------------------------------------------------
-|					Hypervisor								 |
+|					Hypervisor	     |
  ------------------------------------------------------------
  ------------------------------------------------------------
-|						Server								|
+|					Server	            |
  ------------------------------------------------------------
 
- Past				   Present						Present/Future
-(Physical servers)    (Visualization)
+ Past				   Present				Present/Future
+(Physical servers)    		(Visualization)
 
 Time - wasted			More efficient				more efficient than
 Resource - wasted		then physical servers			visualization
@@ -46,15 +46,15 @@ Note :		docker is not a desktop application
 			docker is for a web application
 		 
 Architecture :
-									  --------------------
-Application Application	Application  |	    Free		  |
-Container	Container	Container	 |		Spcae		  |
-									  --------------------
+				      --------------------
+Application Application	Application  |	Free		  |
+Container   Container	Container    |	Spcae		  |
+				      --------------------
  ----------------------------------------------------------
-|			Operating System							   |
+|			Operating System		   |
  ----------------------------------------------------------
  -----------------------------------------------------------
-|					Server									|
+|					Server		   |
  -----------------------------------------------------------	 
 
 micro services : application is broken down into multiple individual components and that component is hosted as a web service. 
@@ -73,7 +73,7 @@ Installing docker gives us the "client" and "daemon". so if we run in client lik
 
 
 client  ----> deamon -----> Image store -----> dockerhub
-		<----		 <-----			 	<-----
+	<----		 <-----		<-----
 		
 -- API calls are nothing but it communicates via http
 ex : GET, POST, PUT, DELETE,.....
