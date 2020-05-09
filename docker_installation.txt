@@ -1,0 +1,179 @@
+Docker :
+
+1. Docker architecture is nothing but the client - server architecture
+	client -- where you can run the commands which is user interface.
+			  it is user interface where it communicates using REST API over http.
+	Server -- It is a Daemon
+			  Responsible for building, running and distributing containers.
+	registry -- where the images are stored which should be a local repository or Docker repository
+
+Docker swarm -- is nothing but the docker clustering
+
+Pre - Docker :
+
+Normal Architecture :
+
+Application	Application	Application	Application
+OS		OS		OS		OS
+VM		VM		VM		VM
+ ------------------------------------------------------------
+|					Hypervisor	     |
+ ------------------------------------------------------------
+ ------------------------------------------------------------
+|					Server	            |
+ ------------------------------------------------------------
+
+ Past				   Present				Present/Future
+(Physical servers)    		(Visualization)
+
+Time - wasted			More efficient				more efficient than
+Resource - wasted		then physical servers			visualization
+Money - Wasted
+ 
+features :
+	- uses CPU
+	- uses RAM
+	- uses DISK
+	- May have license cost
+	- Requires admin time
+
+Docker : It is nothing but a containers (Thin kernel)
+		 It runs on a thin kernel OS
+
+docker OS is a linux and host operating system can be windows.
+		 
+Note :		docker is not a desktop application
+			docker is for a web application
+		 
+Architecture :
+				      --------------------
+Application Application	Application  |	Free		  |
+Container   Container	Container    |	Spcae		  |
+				      --------------------
+ ----------------------------------------------------------
+|			Operating System		   |
+ ----------------------------------------------------------
+ -----------------------------------------------------------
+|					Server		   |
+ -----------------------------------------------------------	 
+
+micro services : application is broken down into multiple individual components and that component is hosted as a web service. 
+
+
+What kind of work will docker do :
+- stateful and stateless workloads can handle.
+- ideally docker is a stateless application
+
+stateful (keeps changes and data) which can store data
+stateless (Does not keep any changes or data) cannot store data
+
+example :
+
+Installing docker gives us the "client" and "daemon". so if we run in client like "docker run 'hello-world'" then it will calls(via API) to daemon and checks weather the docker image store having hello-world program or not. if yes then it will download or else it will asks for the dockerhub and can pull the image and store into the image store.
+
+
+client  ----> deamon -----> Image store -----> dockerhub
+	<----		 <-----		<-----
+		
+-- API calls are nothing but it communicates via http
+ex : GET, POST, PUT, DELETE,.....
+
+LAB :
+
+#yum update -y
+
+#yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+#yum install docker-ce docker-ce-cli containerd.io
+
+#yum list docker-ce --showduplicates | sort -r
+
+#docker --version
+
+#systemctl start docker
+
+#systemctl status docker
+
+#docker run hello-world
+
+#docker images -- to check the images installed 
+
+#docker ps (what are the container running)
+
+#docker ps -a (statistics of the command)
+
+#docker search nginx (it will show whatever images in the docker hub)
+
+#docker search nginx | head -10 (only shows top 10)
+
+#docker run -d -p 8080:80 nginx
+
+#docker run -d -p 8081:8080 -p 50000:50000 jenkins
+
+#docker stop container-ID
+
+#docker start container-ID
+
+#docker rm container-ID --force
+
+#docker ps -a (history of the container/images)
+
+#docker images -- to see the repository/TAG/Image ID/CREATED/SIZE
+
+#docker rmi Image ID -- to remove the images 
+
+#docker container logs --tail 100 <container-ID>
+
+#docker ps -a -f status=running -- it will show the running containers
+
+#docker rm $(docker ps -a -q) --force ---> to remove all the containers at a time
+
+WordPress installation :
+
+#mkdir ~/wordpress && cd ~/wordpress
+
+#docker run -e MYSQL_ROOT_PASSWORD=<password> -e MYSQL_DATABASE=wordpress --name wordpressdb -v "$PWD/database":/var/lib/mysql -d mariadb:latest
+
+#docker ps -a 
+
+#docker start <container ID>
+
+#docker ps -f status=running
+
+#docker ps -f status=excited
+
+#docker pull wordpress
+
+#docker run -e WORDPRESS_DB_PASSWORD=wordpress --name wordpress --link wordpressdb:mysql -p 80:80 -v "$PWD/html":/var/www/html -d wordpress
+
+#docker ps -a 
+
+login from your browser http://<ip-addr>:80
+
+What containers will do :
+- containers create multiple user spaces, in this user spaces the containers will lauch.
+- each isolated user space is called a container
+- One user space doesn't have any communication with other user space.
+- docker will reliable only on namespaces. namespace is nothing but to use in the linux.
+- docker file system is defined on the virtual disk space.
+
+namespace is a kernel feature
+the pid namespace
+the net namespace
+the mnt namespace
+the user namespace
+
+control groups(user namespaces) -- where we cna increase the memory or decrease 
+capabilites(user namespaces) -- which gives the audit, ownership, network, etc..
+							 -- we can give permissionsions only for limited access to the users using capabilites
+every application is launced in the each user spaces.
+
+process, files, network
+
+#docker run -it jenkins /bin/bash
+
+if we need to jump into the container then we need to use below command
+#docker exec -it <container ID> /bin/bash
+
